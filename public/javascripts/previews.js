@@ -86,8 +86,9 @@ $(window).load(function() {
     $('.gallery__el').on('click', imgClickHandler.bind(null, selectedImages, deleteImagesBtn));
     $('#deleteImagesBtn').on('click', function(e) {
         e.preventDefault();
+        console.log(selectedImages);
         $.post('/photo/delete', {
-            photos: selectedImages.map((img) => img[0].src)
+            photos: selectedImages.map((img) => $(img)[0].src)
         })
         .done((res) => {
                 selectedImages.map((image) => {
@@ -107,7 +108,7 @@ function imgClickHandler(selectedImages, deleteImagesBtn, img) {
         _this.removeClass('chosen');
     } else {
         deleteImagesBtn.removeClass('hide');
-        selectedImages.push($(this));
+        selectedImages.push(_this);
         _this.addClass('chosen');
     }
     if (selectedImages.length == 0) {

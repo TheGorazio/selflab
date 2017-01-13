@@ -110,30 +110,24 @@ router.get('/edit/:id', (req, res, next) => {
 */
 router.post('/edit', (req, res, next) => {
     console.log(req.body);
-    var preview = findPreviewById(req.body.id);
-    if (preview) {
-        previews[previews.indexOf(preview)] = {
+    Preview.update({ id: req.body.id }, {
+        $set: {
             "id": req.body.id,
             "name": req.body.name,
             "photo": req.body.photoUrl,
             "gallery": req.body['gallery[]']
-        };
-        Preview.find({ id: req.body.id })
-            .then((preview) => {
-                console.log(preview);
-            })
-            .catch((err) => {
-                console.log(error);
-            });
-        res.status(200).send(JSON.stringify({
-            "lastPreview": preview,
-            "newPreview": findPreviewById(req.body.id)
-        }));        
+        }
+    })
+    .then((preview) => {
+        console.log(preview);
+        pre
+        res.send('Preview edited');        
         res.end();
-    } else {
-        res.status(500).send('Preview not found');
+    })
+    .catch((err) => {
+        res.send('Preview not found');
         res.end();
-    }
+    });
 });
 
 /*
