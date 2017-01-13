@@ -1,0 +1,25 @@
+<h1>{{title}}</h1>
+<div class="previews">
+    <div class="preview">
+        <form id="editPreviewForm" class="preview__edit-form">
+            <input type="text" name="previewName" value="{{preview.name}}" id="editTitleInput" />
+            <div class="photo">
+                <h3>Photo</h3>
+                <img id="photo_img" src="{{preview.photo}}" alt="{{preview.name}}" />
+                <input id="photoLoader" type="file">
+            </div>
+            <h3>Gallery</h3>            
+            <div class="gallery">
+                {{#if preview.gallery}}
+                    {{#each preview.gallery}}
+                        <img class="gallery__el" src="{{this}}" alt="{{preview.name}}">
+                    {{/each}}
+                {{/if}}
+                <button id="deleteImagesBtn" class="btn hide">Delete images</button>
+                <input id="imgLoader" type="file">
+            </div>
+            <button class="btn" type="submit">Save preview</button>
+        </form>
+        <button onClick="deletePreview('{{preview.id}}')">Delete Preview</button>    
+    </div>
+</div>

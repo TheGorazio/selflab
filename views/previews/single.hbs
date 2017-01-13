@@ -1,0 +1,18 @@
+<h1>{{title}}</h1>
+<div class="previews">
+    <div class="preview">
+        <h4>
+            {{preview.name}}
+        </h4>
+        <img src="{{preview.photo}}" alt="{{preview.name}}">
+        <div class="images">
+            {{#if preview.gallery}}
+                {{#each preview.gallery}}
+                    <img src="{{this}}" alt="{{preview.name}}">
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+    <a href="/previews/edit/{{preview.id}}">Edit Preview</a>
+    <button onClick="deletePreview('{{preview.id}}')">Delete Preview</button>
+</div>

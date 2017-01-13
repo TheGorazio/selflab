@@ -1,0 +1,92 @@
+body {
+  padding: 50px;
+  font: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e1e4ff; }
+
+a {
+  color: #00B7FF; }
+
+.hide {
+  display: none; }
+
+input[type="file"] {
+  display: block;
+  margin: 10px;
+  margin-left: 0; }
+
+.preview .preview__edit-form input[type="text"] {
+  height: 25px;
+  width: 100px;
+  padding: 3px;
+  font-size: 17px; }
+
+.preview .preview__edit-form .gallery .gallery__el {
+  display: inline-block;
+  height: 100px;
+  box-sizing: border-box; }
+  .preview .preview__edit-form .gallery .gallery__el.chosen {
+    border: 3px solid maroon; }
+
+.loadWrapper {
+  width: 100px;
+  height: 100px;
+  position: relative; }
+  .loadWrapper .loader {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 25px;
+    left: 25px;
+    border-radius: 50%; }
+    .loadWrapper .loader.load {
+      border: 3px solid transparent;
+      border-top: 3px solid darkblue;
+      border-bottom: 3px solid darkblue;
+      animation: spin 2s infinite linear; }
+    .loadWrapper .loader.success {
+      background-color: green;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      width: 5px;
+      height: 5px;
+      top: 45px;
+      left: 45px;
+      font-size: 1px;
+      animation: success 1.3s forwards cubic-bezier(0, 1.26, 0.62, 1.26); }
+    .loadWrapper .loader.error {
+      background-color: maroon;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      width: 5px;
+      height: 5px;
+      top: 45px;
+      left: 45px;
+      font-size: 1px;
+      animation: success 1.3s forwards cubic-bezier(0, 1.26, 0.62, 1.26); }
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg) scale(1); }
+  50% {
+    transform: rotateZ(180deg) scale(0.5); }
+  100% {
+    transform: rotateZ(360deg) scale(1); } }
+
+@keyframes success {
+  0% {
+    width: 5px;
+    height: 5px;
+    top: 45px;
+    left: 45px;
+    font-size: 1px; }
+  50% {
+    font-size: 1px; }
+  100% {
+    width: 50px;
+    height: 50px;
+    top: 25px;
+    left: 25px;
+    font-size: 25px; } }

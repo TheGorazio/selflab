@@ -1,0 +1,16 @@
+<h1>{{title}}</h1>
+<a href="/previews/new">New Preview</a>
+<div class="previews">
+    {{#if previews}}
+        {{#each previews}}
+            <div class="preview">
+                <h4>
+                    <a href="/previews/{{this.id}}">{{this.name}}</a>
+                </h4>
+                <img src="{{this.photo}}" alt="{{this.name}}">
+            </div>
+        {{/each}}
+    {{else}}
+        <h4>Empty preview list</h4>
+    {{/if}}
+</div>
