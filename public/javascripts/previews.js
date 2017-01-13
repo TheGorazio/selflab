@@ -73,14 +73,14 @@ $(window).load(function() {
     });
     $('#photoLoader').on('change', function (e) {
         console.log('Upload photo...');
-        uploadPhoto(e.target.files[0], photoLoaderCallback.bind(null, photoDOM));
+        uploadPhoto('photo', e.target.files[0], photoLoaderCallback.bind(null, photoDOM));
     });
     $('#imgLoader').on('click', function(e) {
         $(this).val('');
     });
     $('#imgLoader').on('change', function (e) {
         console.log('Upload image...');
-        uploadPhoto(e.target.files[0], imgLoaderCallback.bind(null, galleryDOM, images, imgClickHandler.bind(null, selectedImages, deleteImagesBtn)));
+        uploadPhoto('image', e.target.files[0], imgLoaderCallback.bind(null, galleryDOM, images, imgClickHandler.bind(null, selectedImages, deleteImagesBtn)));
         $(this).value = null;
     });
     $('.gallery__el').on('click', imgClickHandler.bind(null, selectedImages, deleteImagesBtn));
@@ -129,16 +129,25 @@ function photoLoaderCallback(photoDOM, img) {
     photoDOM.src = img;
 };
 
-function uploadPhoto(photo, callback) {
+function uploadPhoto(dest, photo, callback) {
+    var loader;
+    
     var loadWrapper = $('<div>');
         loadWrapper.addClass('loadWrapper');
         loadWrapper.addClass('gallery__el');
-        $('.gallery').prepend(loadWrapper);
-    var loader = $('<div>');
+        if (dest === 'image') {
+            $('.gallery').prepend(loadWrapper);        
+        } else if (dest === 'photo') {
+            $('#photo_img').toggleClass('hide');
+            $('.photo_place').prepend(loadWrapper);
+        }
+        loader = $('<div>');
         loader.addClass('loader');
         loader.addClass('load');
         loadWrapper.append(loader);
-    loader = $('.loader');
+        loader = $('.loader');
+
+
 
     var formData = new FormData();
     formData.append("photo", photo, photo.name);
@@ -155,6 +164,7 @@ function uploadPhoto(photo, callback) {
             loader.text('✓');
             setTimeout(() => {
                 loadWrapper.remove();
+                if (dest === 'photo') $('#photo_img').toggleClass('hide');
                 return callback(data);
             }, 3000);
         },
@@ -165,6 +175,7 @@ function uploadPhoto(photo, callback) {
             loader.text('❌')
             setTimeout(() => {
                 loadWrapper.remove();
+                if (dest === 'photo') $('#photo_img').toggleClass('hide');                
             }, 3000);
         }
     });
