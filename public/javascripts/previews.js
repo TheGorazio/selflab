@@ -161,9 +161,9 @@ function uploadPhoto(photo, callback) {
             console.error('upload error');            
             loader.removeClass('load');
             loader.addClass('error');
-            loader.innerHTML = '❌';
+            loader.text('❌')
             setTimeout(() => {
-                loadingHolder.remove();
+                loadWrapper.remove();
             }, 3000);
         }
     });
