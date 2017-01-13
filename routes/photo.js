@@ -32,11 +32,11 @@ router.post('/upload', upload.single('photo'), (req, res, next) => {
         cloudinary.uploader.upload(req.file.path, function(error, result) { 
             if (!error) {
                 console.log('photo uploaded successfully');
-                res.status(200).send(result.secure_url);
+                res.send(result.secure_url);
                 res.end();
             } else {
                 console.log('photo uploading error', error);
-                res.status(501).send('Error');
+                res.send('Error');
                 res.end();
             }        
         });
