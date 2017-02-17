@@ -1,0 +1,48 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper {
+    height: 400px;
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.left {
+    flex: 1;
+    background-color: maroon;
+}
+
+.right {
+    flex: 3;
+    padding: 5%;
+    background-color: darkkhaki;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.box {
+    width: 20%;
+    height: 90px;
+    border: 1px solid red;
+    transition: all .6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.right.choosing {
+    align-items: center;
+    justify-content: center;
+}
+.right.choosing .box.chosen {
+    width: 60%;
+    height: 90%;
+}
+.right.choosing .box:not(.chosen) {
+    display: none;
+}
+

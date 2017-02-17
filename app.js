@@ -10,6 +10,7 @@ var LocalStorage = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 var previews = require('./routes/previews');
+var photosets = require('./routes/photosets');
 var photo = require('./routes/photo');
 
 var app = express();
@@ -34,6 +35,7 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/previews', previews);
+app.use('/photosets', photosets);
 app.use('/photo', photo);
 
 

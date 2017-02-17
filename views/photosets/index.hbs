@@ -1,0 +1,19 @@
+<h1><a href="/">CMS</a></h1>
+<h2>{{title}}</h2>
+<a href="/photosets/new">New Photoset</a>
+<div class="previews">
+    {{#if photosets}}
+        {{#each photosets}}
+            <div class="preview">
+                <h4>
+                    <a href="/photosets/{{this.id}}">{{this.name}}</a>
+                </h4>
+                <p>
+                    {{this.description}}
+                </p>
+            </div>
+        {{/each}}
+    {{else}}
+        <h4>There are no photosets</h4>
+    {{/if}}
+</div>

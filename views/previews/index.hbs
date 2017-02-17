@@ -1,9 +1,10 @@
-<h1>{{title}}</h1>
+<h1><a href="/">CMS</a></h1>
+<h2>{{title}}</h2>
 <a href="/previews/new">New Preview</a>
-<div class="previews">
+<div class="previews col-sm-12">
     {{#if previews}}
         {{#each previews}}
-            <div class="preview">
+            <div class="preview_single">
                 <h4>
                     <a href="/previews/{{this.id}}">{{this.name}}</a>
                 </h4>

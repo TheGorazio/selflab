@@ -1,11 +1,13 @@
+a {
+  color: #00B7FF;
+  padding: 0;
+  margin: 0; }
+
 body {
   padding: 50px;
   font: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #e1e4ff; }
-
-a {
-  color: #00B7FF; }
 
 .hide {
   display: none; }
@@ -15,18 +17,37 @@ input[type="file"] {
   margin: 10px;
   margin-left: 0; }
 
+.preview_single h3 {
+  font-size: 1.3em; }
+
+.preview_single img {
+  width: 150px; }
+
+.preview h3 {
+  font-size: 1.3em; }
+
+.preview img {
+  width: 250px; }
+
+.preview .images img {
+  width: 150px; }
+
 .preview .preview__edit-form input[type="text"] {
   height: 25px;
   width: 100px;
   padding: 3px;
   font-size: 17px; }
 
+.preview .preview__edit-form .photo .photo_place img {
+  width: 250px; }
+
 .preview .preview__edit-form .gallery .gallery__el {
   display: inline-block;
-  height: 100px;
-  box-sizing: border-box; }
-  .preview .preview__edit-form .gallery .gallery__el.chosen {
-    border: 3px solid maroon; }
+  box-sizing: border-box;
+  width: 150px; }
+
+.chosen {
+  border: 3px solid maroon; }
 
 .loadWrapper {
   width: 100px;
@@ -67,6 +88,43 @@ input[type="file"] {
       font-size: 1px;
       animation: success 1.3s forwards cubic-bezier(0, 1.26, 0.62, 1.26); }
 
+.photoset form .form__data {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  height: 450px; }
+  .photoset form .form__data .photoset__data {
+    -ms-flex: 2;
+        flex: 2; }
+  .photoset form .form__data .photoset__gallery {
+    -ms-flex: 5;
+        flex: 5; }
+    .photoset form .form__data .photoset__gallery h3 {
+      margin: 0;
+      margin-bottom: 15px; }
+    .photoset form .form__data .photoset__gallery .gallery__imgs {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+          flex-direction: row;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+      -ms-flex-align: baseling;
+          align-items: baseling; }
+      .photoset form .form__data .photoset__gallery .gallery__imgs img {
+        height: 150px; }
+
+.photoset form .form__controls {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: baseline;
+      align-items: baseline;
+  -ms-flex-pack: start;
+      justify-content: flex-start; }
+
 @keyframes spin {
   0% {
     transform: rotateZ(0deg) scale(1); }
@@ -90,3 +148,5 @@ input[type="file"] {
     top: 25px;
     left: 25px;
     font-size: 25px; } }
+
+/*# sourceMappingURL=main.css.map */

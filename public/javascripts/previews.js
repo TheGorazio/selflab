@@ -1,4 +1,5 @@
 'use strict';
+var page = location.pathname.split("/")[1];
 
 function deletePreview(id) {
     var headers = new Headers();
@@ -18,6 +19,31 @@ function deletePreview(id) {
     })
     .done((data) => {
         location.href = '/previews';
+    })
+    .fail((err) => {
+        document.getElementsByTagName('h1')[0].innerHTML = 'Error';
+        document.getElementsByTagName('h1')[0].style.color = 'red';
+    });
+}
+
+function deletePhotoset(id) {
+    var headers = new Headers();
+    var data = JSON.stringify({
+            id: id
+        });
+    var fetchOptions = { 
+        method: 'POST',
+        body: JSON.stringify({
+            id: id
+        }),
+        headers: headers,
+        mode: 'cors'
+    };
+    $.post('/photosets/delete', {
+        id: id
+    })
+    .done((data) => {
+        location.href = '/photosets';
     })
     .fail((err) => {
         document.getElementsByTagName('h1')[0].innerHTML = 'Error';
@@ -80,10 +106,15 @@ $(window).load(function() {
     });
     $('#imgLoader').on('change', function (e) {
         console.log('Upload image...');
-        uploadPhoto('image', e.target.files[0], imgLoaderCallback.bind(null, galleryDOM, images, imgClickHandler.bind(null, selectedImages, deleteImagesBtn)));
+        if (page === 'photosets') 
+            uploadPhoto('image', e.target.files[0], imgLoaderCallback.bind(null, $('.photoset__gallery .gallery__imgs'), images, imgClickHandler.bind(null, selectedImages, deleteImagesBtn)));
+        else
+            uploadPhoto('image', e.target.files[0], imgLoaderCallback.bind(null, galleryDOM, images, imgClickHandler.bind(null, selectedImages, deleteImagesBtn)));
+         
         $(this).value = null;
     });
     $('.gallery__el').on('click', imgClickHandler.bind(null, selectedImages, deleteImagesBtn));
+
     $('#deleteImagesBtn').on('click', function(e) {
         e.preventDefault();
         console.log(selectedImages);
@@ -92,12 +123,30 @@ $(window).load(function() {
         })
         .done((res) => {
                 selectedImages.map((image) => {
-                image.remove();
-            });
+                    image.remove();
+                });
             selectedImages = [];
             deleteImagesBtn.addClass('hide');
         })
         .fail((error) => console.error('error'));
+    });
+
+    $('#newPhotosetForm').submit((e) => {
+        e.preventDefault();        
+        images = Array.from(document.getElementsByClassName('gallery__el')).map((img) => img.src);
+        $.post('/photosets/create', {
+            name: e.target.photosetName.value,
+            description: e.target.photosetDescription.value,
+            gallery: images
+        })
+        .done((data) => {
+            location.href = '/photosets';
+        })
+        .fail((err) => {
+            console.log(err);
+            document.getElementsByTagName('h1')[0].innerHTML = 'Error';
+            document.getElementsByTagName('h1')[0].style.color = 'red';
+        });
     });
 });
 
@@ -135,8 +184,13 @@ function uploadPhoto(dest, photo, callback) {
     var loadWrapper = $('<div>');
         loadWrapper.addClass('loadWrapper');
         loadWrapper.addClass('gallery__el');
+
         if (dest === 'image') {
-            $('.gallery').prepend(loadWrapper);        
+            if (page === 'photosets')
+                $('.photoset__gallery .gallery__imgs').prepend(loadWrapper);                    
+            else {
+                $('.gallery').prepend(loadWrapper);        
+            }
         } else if (dest === 'photo') {
             $('#photo_img').toggleClass('hide');
             $('.photo_place').prepend(loadWrapper);
@@ -164,7 +218,8 @@ function uploadPhoto(dest, photo, callback) {
             loader.text('✓');
             setTimeout(() => {
                 loadWrapper.remove();
-                if (dest === 'photo') $('#photo_img').toggleClass('hide');
+                if (dest === 'photo') 
+                    $('#photo_img').toggleClass('hide');
                 return callback(data);
             }, 3000);
         },
@@ -175,7 +230,8 @@ function uploadPhoto(dest, photo, callback) {
             loader.text('❌')
             setTimeout(() => {
                 loadWrapper.remove();
-                if (dest === 'photo') $('#photo_img').toggleClass('hide');                
+                if (dest === 'photo') 
+                    $('#photo_img').toggleClass('hide');                
             }, 3000);
         }
     });

@@ -4,10 +4,6 @@ var router = express.Router();
 var PreviewSchema = require('../models/preview.js');
 
 var mongoose = require('mongoose');
-    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
-
-var db = mongoose.connection;
-    db.on('error', (error) => console.error(error));
 
 var Preview = mongoose.model('Preview', PreviewSchema);
 
@@ -15,9 +11,14 @@ var Preview = mongoose.model('Preview', PreviewSchema);
     PREVIEWS PAGE
 */
 router.get('/', (req,res,next) => {
+    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+    var db = mongoose.connection;
+        db.on('error', (error) => console.error(error));
+
     Preview.find()
         .then((previews) => {
             console.log(previews);
+            mongoose.disconnect();                    
             res.render('previews/index', {
                 title: 'Previews',
                 previews: previews
@@ -25,11 +26,9 @@ router.get('/', (req,res,next) => {
         })
         .catch((err) => {
             console.log(err);
+            mongoose.disconnect();        
         });
 });
-
-
-/* REST API */
 
 /* 
     GET ALL PREVIEWS
@@ -58,8 +57,11 @@ router.get('/new', (req, res, next) => {
     METHOD: POST
 */
 router.post('/create', (req, res, next) => {
-    console.log(req.body);
     if (req.body.name && req.body.photoUrl) {
+        mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+        var db = mongoose.connection;
+            db.on('error', (error) => console.error(error));
+    
         var preview = new Preview({
             id: generateID(),
             name: req.body.name,
@@ -68,9 +70,11 @@ router.post('/create', (req, res, next) => {
         });
         preview.save()
             .then((prev) => {
+                mongoose.disconnect();                        
                 res.send('Ok');
             })
             .catch((err) => {
+                mongoose.disconnect();        
                 res.send(err);
             });
     } else {
@@ -86,17 +90,26 @@ router.post('/create', (req, res, next) => {
     METHOD: GET
 */
 router.get('/edit/:id', (req, res, next) => {
-      Preview.findOne({ id: req.params.id})
-        .then((preview) => {
-            console.log(preview);
-            res.render('previews/edit', {
-                title: `Preview - ${preview.name}`,
-                preview: preview
-            });
-        })
-        .catch((err) => {
-            console.log(err);
+    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+    var db = mongoose.connection;
+        db.on('error', (error) => console.error(error));
+    
+    Preview.findOne({ id: req.params.id})
+    .then((preview) => {
+        console.log(preview);
+        mongoose.disconnect();                
+        res.render('previews/edit', {
+            title: `Preview - ${preview.name}`,
+            preview: preview
         });
+    })
+    .catch((err) => {
+        console.log(err);
+        mongoose.disconnect();        
+        res.render('error', {
+            message: 'Photoset not found'
+        });
+    });
 });
 
 /*
@@ -110,6 +123,10 @@ router.get('/edit/:id', (req, res, next) => {
 */
 router.post('/edit', (req, res, next) => {
     console.log(req.body);
+    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+    var db = mongoose.connection;
+        db.on('error', (error) => console.error(error));
+    
     Preview.update({ id: req.body.id }, {
         $set: {
             "id": req.body.id,
@@ -120,13 +137,15 @@ router.post('/edit', (req, res, next) => {
     })
     .then((preview) => {
         console.log(preview);
-        pre
+        mongoose.disconnect();                
         res.send('Preview edited');        
         res.end();
     })
     .catch((err) => {
-        res.send('Preview not found');
-        res.end();
+        mongoose.disconnect();        
+        res.render('error', {
+            message: 'Photoset not found'
+        });
     });
 });
 
@@ -137,14 +156,20 @@ router.post('/edit', (req, res, next) => {
     METHOD: POST
 */
 router.post('/delete', (req, res, next) => {
+    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+    var db = mongoose.connection;
+        db.on('error', (error) => console.error(error));
+    
     Preview.remove({ id: req.body.id})
         .then((result) => {
-            console.log(result);                
-            res.status(200).send('Delete success.');        
+            console.log(result);
+            mongoose.disconnect();                               
+            res.send('Delete success.');        
         })
         .catch((err) => {
             console.log(err);
-            res.status(500).send('Preview not found');
+            mongoose.disconnect();
+            res.send('Preview not found');
             res.end();
         });
 });
@@ -156,9 +181,14 @@ router.post('/delete', (req, res, next) => {
     METHOD: GET
 */
 router.get('/:id', (req, res, next) => {
+    mongoose.connect('mongodb://thegorazio:408528867@ds054479.mlab.com:54479/selflab');
+    var db = mongoose.connection;
+        db.on('error', (error) => console.error(error));
+    
     Preview.findOne({ id: req.params.id})
         .then((preview) => {
             console.log(preview);
+            mongoose.disconnect();            
             res.render('previews/single', {
                 title: `Preview - ${preview.name}`,
                 preview: preview
@@ -166,6 +196,10 @@ router.get('/:id', (req, res, next) => {
         })
         .catch((err) => {
             console.log(err);
+            mongoose.disconnect();
+            res.render('error', {
+                message: 'Photoset not found'
+            });
         });
 });
 

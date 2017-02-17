@@ -1,0 +1,35 @@
+<h1><a href="/">CMS</a></h1>
+<h2>{{title}}</h2>
+<div class="photoset">
+    <form id="newPhotosetForm">
+        <div class="form__data">
+            <div class="photoset__data">
+                <div class="form__row">
+                    <label for="photosetName">Photoset name</label></br>
+                    <input type="text" name="photosetName" placeholder="Photoset name" value="{{photoset.name}}"/>
+                </div>
+                <div class="form__row">
+                    <label for="photosetDescription">Photoset Description</label></br>
+                    <textarea name="photosetDescription" cols="30" rows="10" placeholder="Photoset description" value={{photoset.description}}></textarea>
+                </div>            
+            </div>
+            <div class="photoset__gallery">
+                <h3>Gallery</h3>
+                <div class="gallery__imgs">
+                    {{#if photoset.gallery}}
+                    {{#each photoset.gallery}}
+                        <img class="gallery__el" src="{{this}}" alt="{{photoset.name}}">
+                    {{/each}}
+                    {{/if}}
+                </div>           
+            </div>
+        </div>
+        <div class="form__controls">
+            <button type="submit">Save preview</button>       
+            <button id="deleteImagesBtn" class="btn hide">Delete images</button>
+            <input id="imgLoader" type="file">
+            <button onClick="deletePhotoset('{{photoset.id}}')">Delete photoset</button>    
+          
+        </div>
+    </form>
+</div>
